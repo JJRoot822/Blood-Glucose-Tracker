@@ -1,0 +1,67 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+html {
+    background-color: black;
+}
+
+#data {
+    width: 100%;
+    margin-top: 20px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    height: 35px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+input:not([type="button"]) {
+    background-color: black;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    text-align: center;
+}
+
+input:not([type="button"])::placeholder {
+    color: lightgray;
+}
+
+input[type="date"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input[type="button"] {
+    background-color: blue;
+    color: white;
+    border-color: blue;
+    border-style: solid;
+}
+
+#data-points {
+    margin-top: 10px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+ul#points {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul#points li {
+    text-align: center;
+    padding: 5px 0;
+}
+
+canvas {
+    border: 1px solid white;
+}

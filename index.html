@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <canvas id="chart" width="1600" height="500"></canvas>
+        <div id="data">
+            <div id="inputs">
+                <input type="number" id="bgl-input"  placeholder="Blood Glucose Level" />
+                <input type="date"   id="date-input" placeholder="Date Blood Glucose Level Measured" />
+                <input type="button" id="add-btn"    value="Add Blood Glucose Reading" />
+            </div>
+            <div id="data-points">
+                <ul id="points">
+                    
+                </ul>
+            </div>
+        </div>
+        <script src="./node_modules/chart.js/dist/Chart.min.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
