@@ -15,6 +15,10 @@ var dateInput = document.getElementById('date-input');
 var chart;
 var data;
 
+const createFile = () => {
+    fs.writeFileSync(path.join(os.homedir(), 'data.json'), "");
+}
+
 const readFile = filePath => {
     var fileContent = fs.readFileSync(filePath,{ encoding: 'utf-8' });
 
@@ -22,7 +26,7 @@ const readFile = filePath => {
 }
 
 const writeFile = (filePath, contentToWrite) => {
-    fs.writeFile(filePath, contentToWrite, (err) => {
+    fs.writeFileSync(filePath, contentToWrite, (err) => {
         if (err) throw err;
         console.log(`${contentToWrite} has been written to ${filePath}`);
     });
@@ -36,7 +40,7 @@ const loadChartData = () => {
     if (fs.existsSync(filePath)) {
         data = readFile(filePath);
     } else {
-        writeFile(filePath, []);
+        writeFile(filePath, "[]");
         data = readFile(filePath);
     }
 

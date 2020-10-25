@@ -4,6 +4,8 @@ const { app, BrowserWindow } = require('electron');
 const createWindow = () => {
     const win = new BrowserWindow(config);
 
+    win.webContents.openDevTools();
+
     win.loadFile('index.html');
 }
 
