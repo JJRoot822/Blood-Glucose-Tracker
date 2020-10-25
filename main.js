@@ -5,6 +5,7 @@ const createWindow = () => {
     const win = new BrowserWindow(config);
 
     win.loadFile('index.html');
+    win.setMenu(null);
 }
 
 app.whenReady().then(createWindow);
