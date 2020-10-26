@@ -1,9 +1,12 @@
 const fs    = require('fs');
 const path  = require('path');
 const os    = require('os');
-const fetch = require('node-fetch');
 
-var ctx = document.getElementById('chart').getContext('2d');
+const { readFile, writeFile } = require('./file-util.js');
+const { dataJSONLocation    } = require('./constants.js');
+const { defaultChartOptions } = require('./chart-util.js');
+
+var chartContext = document.getElementById('chart').getContext('2d');
 
 var chart;
 
@@ -12,30 +15,12 @@ var addBtn    = document.getElementById('add-btn');
 var bglInput  = document.getElementById('bgl-input');
 var dateInput = document.getElementById('date-input');
 
-var chart;
 var data;
 
-const createFile = () => {
-    fs.writeFileSync(path.join(os.homedir(), 'data.json'), "");
-}
-
-const readFile = filePath => {
-    var fileContent = fs.readFileSync(filePath,{ encoding: 'utf-8' });
-
-    return JSON.parse(fileContent);
-}
-
-const writeFile = (filePath, contentToWrite) => {
-    fs.writeFileSync(filePath, contentToWrite, (err) => {
-        if (err) throw err;
-        console.log(`${contentToWrite} has been written to ${filePath}`);
-    });
-}
-
-const loadChartData = () => {
+const loadChartData = chart => {
     list.innerHTML = "";
 
-    var filePath = path.join(os.homedir(), 'data.json');
+    var filePath = dataJSONLocation;
     
     if (fs.existsSync(filePath)) {
         data = readFile(filePath);
@@ -56,36 +41,16 @@ const loadChartData = () => {
     chart.update();
 }
 
-const loadChart = () => {
-    chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Blood Glucose Level',
-                pointBackgroundColor: '200, 200, 255',
-                pointBorderColor: '200, 200, 255',
-                borderColor: 'rgb(0, 0, 255)',
-                data: []
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                fontColor: '#fff',
-                text: "Blood Glucose Levels (mg/dL)"
-            },
-            legend: {
-                display: false
-            }
-        }
-    });
+const loadChart = context => {
+    var chart = new Chart(context, defaultChartOptions);
     
     Chart.defaults.global.defaultFontColor = '#fff';
+
+    return chart;
 }
 
-loadChart();
-loadChartData();
+var chart = loadChart(chartContext);
+loadChartData(chart);
 
 addBtn.addEventListener('click', () => {
     data.push({ 
@@ -97,7 +62,7 @@ addBtn.addEventListener('click', () => {
         } 
     });
 
-    writeFile(path.join(os.homedir(), 'data.json'), JSON.stringify(data));
+    writeFile(dataJSONLocation, JSON.stringify(data));
 
     chart.data.labels = [];
     chart.data.datasets[0].data = [];
