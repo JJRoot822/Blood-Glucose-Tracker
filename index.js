@@ -1,6 +1,4 @@
 const fs    = require('fs');
-const path  = require('path');
-const os    = require('os');
 
 const { readFile, writeFile } = require('./file-util.js');
 const { dataJSONLocation    } = require('./constants.js');
