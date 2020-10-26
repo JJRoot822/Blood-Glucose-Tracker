@@ -1,8 +1,18 @@
 const fs    = require('fs');
 
-const { readFile, writeFile } = require('./file-util.js');
-const { dataJSONLocation    } = require('./constants.js');
-const { defaultChartOptions } = require('./chart-util.js');
+const { 
+    readFile, 
+    writeFile 
+} = require('./file-util.js');
+
+const { 
+    dataJSONLocation 
+} = require('./constants.js');
+
+const { 
+    defaultChartOptions, 
+    resetData 
+} = require('./chart-util.js');
 
 var chartContext = document.getElementById('chart').getContext('2d');
 
@@ -51,20 +61,21 @@ var chart = loadChart(chartContext);
 loadChartData(chart);
 
 addBtn.addEventListener('click', () => {
+    var date = dateInput.value;
+    const [ year, month, day ] = date.split("-");
+
     data.push({ 
         level: parseInt(bglInput.value), 
         date: { 
-            month: dateInput.value.split('-')[1], 
-            day: dateInput.value.split('-')[2], 
-            year: dateInput.value.split('-')[0] 
+            month: month, 
+            day: day, 
+            year: year 
         } 
     });
 
     writeFile(dataJSONLocation, JSON.stringify(data));
 
-    chart.data.labels = [];
-    chart.data.datasets[0].data = [];
-    list.innerHTML = "";
+    resetData(chart, list);
 
     data.forEach(element => {
         chart.data.labels = [...chart.data.labels, `${element.date.month}/${element.date.day}/${element.date.year}`];

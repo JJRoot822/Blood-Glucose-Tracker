@@ -23,3 +23,9 @@ exports.defaultChartOptions = {
         }
     }
 };
+
+exports.resetData = (chart, list) => {
+    chart.data.labels = [];
+    chart.data.datasets[0].data = [];
+    list.innerHTML = "";
+}
