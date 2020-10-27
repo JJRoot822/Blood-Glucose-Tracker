@@ -10,8 +10,8 @@ const {
 } = require('./constants.js');
 
 const { 
-    defaultChartOptions, 
-    resetData 
+    resetData,
+    defaultChartOptions 
 } = require('./chart-util.js');
 
 var chartContext = document.getElementById('chart').getContext('2d');
@@ -24,6 +24,14 @@ var bglInput  = document.getElementById('bgl-input');
 var dateInput = document.getElementById('date-input');
 
 var data;
+
+const loadChart = context => {
+    var chart = new Chart(context, defaultChartOptions);
+    
+    Chart.defaults.global.defaultFontColor = '#fff';
+
+    return chart;
+}
 
 const loadChartData = chart => {
     list.innerHTML = "";
@@ -38,9 +46,10 @@ const loadChartData = chart => {
     }
 
     data.forEach(element => {
-        chart.data.labels.push(`${element.date.month}/${element.date.day}/${element.date.year}`);
+        let dateString = `${element.date.month}/${element.date.day}/${element.date.year}`
+        chart.data.labels = [...chart.data.labels, dateString];
         chart.data.datasets.forEach(dataset => {
-            dataset.data.push(element.level);
+             dataset.data = [...dataset.data, element.level];
         });
 
         list.innerHTML += `<li>${element.date.month}/${element.date.day}/${element.date.year} - ${element.level}mg/dL</li>`;
@@ -49,32 +58,18 @@ const loadChartData = chart => {
     chart.update();
 }
 
-const loadChart = context => {
-    var chart = new Chart(context, defaultChartOptions);
-    
-    Chart.defaults.global.defaultFontColor = '#fff';
-
-    return chart;
-}
-
 var chart = loadChart(chartContext);
 loadChartData(chart);
 
 addBtn.addEventListener('click', () => {
-    var date = dateInput.value;
-    const [ year, month, day ] = date.split("-");
+    let date = dateInput.value;
+    let [ year, month, day ] = date.split("-");
+    let level = parseInt(bglInput.value);
+    let bgData = { level: level, date: { month: month, day: day, year: year } };
 
-    data.push({ 
-        level: parseInt(bglInput.value), 
-        date: { 
-            month: month, 
-            day: day, 
-            year: year 
-        } 
-    });
+    data = [...data, bgData];
 
     writeFile(dataJSONLocation, JSON.stringify(data));
-
     resetData(chart, list);
 
     data.forEach(element => {
