@@ -7,59 +7,39 @@ html {
     background-color: black;
 }
 
-#data {
-    width: 100%;
-    margin-top: 20px;
+#inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 10px;
 }
 
-input {
-    display: block;
-    width: 100%;
-    height: 35px;
-    width: 95%;
-    margin: 0 auto;
-}
-
-input:not([type="button"]) {
+#inputs input:not([type="button"]) {
     background-color: black;
-    color: white;
-    border-style: solid;
     border-color: white;
-    text-align: center;
+    border-style: solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
-input:not([type="button"])::placeholder {
+#inputs input:not([type="button"])::placeholder {
     color: lightgray;
 }
 
-input[type="date"] {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-input[type="button"] {
-    background-color: blue;
-    color: white;
-    border-color: blue;
+#inputs input[type="button"] {
+    background-color: rgb(0, 0, 200);
+    border-color: rgb(0, 0, 100);
     border-style: solid;
 }
 
-#data-points {
-    margin-top: 10px;
-    width: 95%;
-    margin: 0 auto;
-}
-
-ul#points {
-    width: 100%;
+#points {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     list-style-type: none;
-    margin: 0;
     padding: 0;
-}
-
-ul#points li {
+    margin: 25px 0;
     text-align: center;
-    padding: 5px 0;
+    gap: 20px;
 }
 
 canvas {
